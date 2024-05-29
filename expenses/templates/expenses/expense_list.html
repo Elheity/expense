@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding-top: 70px; /* To account for fixed header */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .result-item {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-title {
+            color: #c2661b;
+            font-weight: bold;
+        }
+
+        .result-company-name {
+            font-weight: bold;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .result-header img {
+            margin-right: 10px;
+        }
+
+        .app-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .app-bar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .app-bar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .app-bar .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .app-bar .nav-links a:hover {
+            color: #cce7ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <div class="logo">Expense</div>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Expense List</h2>
+        <ul class="list-unstyled">
+            {% for expense in expenses %}
+                <div class="result-item">
+                    <div class="result-header">
+                        <span class="result-title">Type: {{ expense.type_of_expense }}</span>
+                    </div>
+                    <br>
+                    <ul>
+                        <li>Details: {{ expense.details }}</li>
+                        <li>The amount: {{ expense.amount }}</li>
+                        <li>User: {{ expense.user }}</li>
+                        <li class="result-company-name">Date: {{ expense.date }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
